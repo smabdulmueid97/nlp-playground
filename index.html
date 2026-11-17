@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NLP Playground — paste text, see what is inside it</title>
+<meta name="description" content="A free client side NLP toolkit: sentiment, keywords, language detection and text stats. Paste text and get instant analysis in your browser. No server, no sign up.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <p class="wordmark">NLP<span>·</span>Playground</p>
+    <p class="topbar-note">Runs entirely in your browser. Your text never leaves this page.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="intro">
+    <h1>Paste text.<br>See what is inside it.</h1>
+    <p class="lede">A small toolkit for reading text the way a computer reads it: which words carry feeling, which words repeat, which language it is written in, and how long it is. Everything runs on this page. There is no server, no sign up, and nothing is uploaded.</p>
+    <p class="honest">Honest note: the sentiment and keyword results come from simple word lists and counting rules, not from a trained model. They are a transparent starting point, not a verdict.</p>
+  </section>
+
+  <div class="workbench">
+    <section class="panel input-panel" aria-label="Input">
+      <label class="field-label" for="inputText">Your text</label>
+      <textarea id="inputText" rows="12" placeholder="Paste or type text here, in English, Arabic, Bengali, Hindi or Urdu…"></textarea>
+      <div class="input-actions">
+        <button id="analyzeBtn" class="btn-primary" type="button">Analyse text</button>
+        <button id="clearBtn" class="btn-quiet" type="button">Clear</button>
+      </div>
+      <div class="samples">
+        <p class="samples-title">Try a sample</p>
+        <div class="sample-buttons">
+          <button type="button" class="chip-btn" data-sample="english">English, happy day</button>
+          <button type="button" class="chip-btn" data-sample="arabic">Arabic, a good book</button>
+          <button type="button" class="chip-btn" data-sample="bengali">Bengali, a rainy morning</button>
+        </div>
+      </div>
+      <p class="live-note">Analysis updates as you type. The button is there if you prefer to press it.</p>
+    </section>
+
+    <section class="panel results-panel" aria-label="Results" aria-live="polite">
+      <div id="emptyState" class="empty-state">
+        <p class="empty-big">Nothing to analyse yet.</p>
+        <p>Paste some text on the left, or tap one of the samples, and the results will appear here.</p>
+      </div>
+
+      <div id="results" hidden>
+        <div class="result-block">
+          <h2>Language</h2>
+          <p class="lang-line"><span id="langName" class="lang-name">—</span> <span id="langDetail" class="muted"></span></p>
+          <div id="langBars" class="lang-bars"></div>
+        </div>
+
+        <div class="result-block">
+          <h2>Sentiment <span class="method-tag">lexicon based</span></h2>
+          <p class="sentiment-line"><span id="sentimentLabel" class="sentiment-label">Neutral</span> <span id="sentimentScore" class="muted"></span></p>
+          <p class="muted small">Score = positive words minus negative words, counted from a small word list. It does not understand sarcasm, negation or context.</p>
+          <div class="word-lists">
+            <div>
+              <h3>Matched positive words</h3>
+              <div id="posWords" class="chips"></div>
+            </div>
+            <div>
+              <h3>Matched negative words</h3>
+              <div id="negWords" class="chips"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-block">
+          <h2>Top keywords <span class="method-tag">frequency based</span></h2>
+          <p class="muted small">The most repeated meaningful words, after common filler words are removed.</p>
+          <ol id="keywordList" class="keyword-list"></ol>
+        </div>
+
+        <div class="result-block">
+          <h2>Text stats</h2>
+          <dl class="stats-grid">
+            <div><dt>Words</dt><dd id="statWords">0</dd></div>
+            <div><dt>Sentences</dt><dd id="statSentences">0</dd></div>
+            <div><dt>Characters</dt><dd id="statChars">0</dd></div>
+            <div><dt>Reading time</dt><dd id="statReading">0 min</dd></div>
+            <div><dt>Avg sentence length</dt><dd id="statAvg">0 words</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="how">
+    <h2>How it works</h2>
+    <div class="how-grid">
+      <div>
+        <h3>Sentiment</h3>
+        <p>Each word is checked against a short list of positive and negative words in English, Arabic, Bengali, Hindi and Urdu. Matched words are shown so you can see exactly why a score came out the way it did.</p>
+      </div>
+      <div>
+        <h3>Keywords</h3>
+        <p>Words are counted, common filler words are dropped, and the ten most frequent remain. No ranking magic, just counting.</p>
+      </div>
+      <div>
+        <h3>Language</h3>
+        <p>Characters are grouped by script: Latin, Arabic script, Bengali script and Devanagari. Urdu is separated from Arabic by letters that only Urdu uses. Mixed text shows the share of each script.</p>
+      </div>
+      <div>
+        <h3>Limits</h3>
+        <p>Word lists are small, so short or unusual text can score neutral even when the feeling is clear to a human. That is the honest limit of a rule based tool, and it is why the matched words are shown.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p><strong>NLP Playground</strong> — a client side demo. No data leaves your browser. Built by S M Abdul Mueid. MIT License.</p>
+    <p><a href="https://github.com/smabdulmueid97/nlp-playground">View the source on GitHub</a></p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
